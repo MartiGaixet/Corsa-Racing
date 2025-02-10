@@ -1,0 +1,174 @@
+.homeBody{
+  background-image: linear-gradient(to bottom, #1D5BAC, #C10627);
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  color: white;
+}
+
+.bi{
+  z-index: 11;
+}
+
+a, span{
+  cursor: pointer;
+}
+
+.bodyOthers{
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  background-image: 
+    linear-gradient(
+      rgba(29, 91, 172, 0.9),
+      rgba(4, 2, 39, 0.9)
+    ),
+    url(../assets/fondoScreens.avif);
+  background-size: cover; 
+  background-position: center;
+  color: white;
+}
+
+.bodyLogin{
+  height: 100vh;
+  width: 65%;
+  margin: 0;
+  background-image: 
+    linear-gradient(
+      rgba(29, 91, 172, 0.98),
+      rgba(4, 2, 39, 0.98)
+    ),
+    url(../assets/fondoLogin.png);
+  background-size: cover; 
+  background-position: center;
+  color: white;
+}
+
+
+
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
+.nav-link {
+  color: white !important;
+  cursor: pointer;
+}
+
+.nav-item {
+  margin-right: 20px;
+  z-index: 11;
+}
+
+.nav-item:last-child {
+  margin-right: 0;
+}
+
+
+.titleHome{
+  font-weight: bold;
+  font-size: 8em;
+  margin-top: 0.5em;
+}
+
+.porscheHeader{
+  position: absolute;
+  width: 80%;
+  height: auto;
+  top: 4%;
+  right: 10%;
+}
+
+.homeSubtitle{
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.5em;
+  margin-top: 10em;
+}
+
+.othersSubtitles{
+    font-style: italic;
+    font-weight: 400;
+    text-align: left;
+    margin-left: 5em;
+}
+
+.linea-blanca {
+  height: 2px; /* Grosor de la línea */
+  background-color: white; /* Color de la línea */
+  width: 80%; /* Ocupa todo el ancho */
+  margin-left: 10em;
+}
+
+form{
+  color: black;
+}
+
+form div{
+  text-align: left;
+  width: 30vw;
+}
+
+.formContainer{
+  text-align: center;
+  width: 35%;
+}
+
+.titleLogin{
+  margin-left: 1.5em;
+  font-size: 5em;
+  font-weight: 800;
+}
+
+.descLogin{
+  font-weight: 100;
+  font-size: 1.3em;
+  font-style: italic;
+  width: 40vw;
+  margin-left: 6em;
+}
+
+.botonLogin {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: 2px solid blue;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bolder;
+  transition: all 0.3s ease;
+}
+
+.botonLogin:hover {
+  background-color: white;
+  color: blue;
+}
+
+.botonMas {
+  background-color: #C10627;
+  border: 2px solid #C10627;
+  color: white;
+  border-radius: 13px;
+  font-weight: 900;
+  font-size: 2em;
+  transition: all 0.3s ease;
+}
+
+.botonMas:hover{
+  background-color: transparent;
+  color: white;
+}
+
+.campeonatoPreview{
+    border: 3px solid white;
+    border-radius: 20px;
+    width: 60vw;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.campeonatoPreview:hover{
+  transform: scale(1.15);
+}
+
