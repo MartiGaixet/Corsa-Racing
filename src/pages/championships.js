@@ -29,7 +29,7 @@ function Championships() {
           <CampeonatosUser key={championship.id} championship={championship} />
         )))}
         <button className="botonMas mt-3">+</button>
-            </div>   
+            </div>
         </div>
         
     );

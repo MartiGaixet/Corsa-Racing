@@ -2,32 +2,22 @@ import React from "react";
 import Casco from "../assets/helmet.png"
 
 
-function RacesUser() {
+function RacesUser({ race }) {
     return(
         <div>
-            <div className="d-flex flex-row gap-3">
-                <div className="d-flex racePreview">
-                    <div>
-                        <h6>Campeonato</h6>
-                        <p>Empieza en: 6d 3h</p>
-                    </div>
-                    <div className="text-end racepreviewDown">
-                        <img src={Casco} alt="Casco icono"></img>
-                        <p>32</p>
-                    </div>
+            <div className="card text-white dark-card">
+                <div className="card-body">
+                    <h5 className="card-title text-center">{race.Circuit}</h5>
+                    <p className="card-text text-center">{race.Car}</p>
                 </div>
-                <div className="d-flex racePreview">
-                    <div>
-                        <h6>Campeonato</h6>
-                        <p>Empieza en: 6d 3h</p>
-                    </div>
-                    <div className="text-end racePreviewFooter">
-                        <img src={Casco} alt="Casco icono"></img>
-                        <p>32</p>
+                <div className="card-footer d-flex justify-content-between align-items-center">
+                    <p className="mb-0 text-white">2d 13h</p>
+                    <div className="d-flex align-items-center gap-2">
+                        <img src={Casco} alt="Casco" width="20" height="20"></img>
+                        <p className="mb-0">{race.Drivers.length}</p>
                     </div>
                 </div>
             </div>
-            <button className="botonMas mt-3">+</button>
         </div>
     );
 }

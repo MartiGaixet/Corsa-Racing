@@ -172,3 +172,22 @@ form div{
   transform: scale(1.15);
 }
 
+.dark-card{
+  width: 18rem;
+  border-radius: 10px;
+  background-color: #0000;
+}
+
+.card-body{
+  background-color: black;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-footer{
+  background: linear-gradient(to right, #1D5BAC, #C10627);
+  padding: 5px 10px;
+  height: 6vh;
+  display: flex;
+  align-items: center;
+}
+

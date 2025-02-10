@@ -12,7 +12,7 @@ function CampeonatosUser({ championship }) {
                     </div>
                     <div className="d-flex mt-4 me-3 gap-2">
                         <img src={Casco} alt="Casco icono" width="20" height="20"></img>
-                        <h6>32</h6>
+                        <h6>{championship.Drivers.length}</h6>
                     </div>
                 </div>
         </div>
