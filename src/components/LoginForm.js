@@ -3,9 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
-
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -13,28 +11,39 @@ function LoginForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Datos enviados:", data);
-    reset(); // Resetea el formulario después del envío
-  };
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("https://localhost:7033/api/UsersApi/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-  const goHome = () => {
-    navigate("/");
-  }
+      if (!response.ok) {
+        throw new Error("Credenciales incorrectas");
+      }
+
+      const user = await response.json();
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
+
+    reset(); 
+  };
 
   return (
     <div className="App">
       <form onSubmit={handleSubmit(onSubmit)} className="container gap-5">
-
         <div>
           <label className="form-label">Email</label>
           <input
             type="email"
             className="form-control"
-            {...register("email", {
-              required: "Este campo es obligatorio",})}
+            {...register("email", { required: "Este campo es obligatorio" })}
           />
-          {errors.age && <span>{errors.age.message}</span>}
+          {errors.email && <span>{errors.email.message}</span>}
         </div>
 
         <div>
@@ -42,14 +51,13 @@ function LoginForm() {
           <input
             type="password"
             className="form-control"
-            {...register("email", {
-              required: "Este campo es obligatorio",})}
+            {...register("password", { required: "Este campo es obligatorio" })}
           />
-          {errors.age && <span>{errors.age.message}</span>}
+          {errors.password && <span>{errors.password.message}</span>}
         </div>
 
         <div className="d-flex justify-content-center">
-          <button className="mt-5 mx-auto botonLogin" type="submit" onClick={goHome}>Login</button>
+          <button className="mt-5 mx-auto botonLogin" type="submit">Login</button>
         </div>
       </form>
     </div>
