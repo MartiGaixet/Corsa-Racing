@@ -14,6 +14,11 @@ function Championships() {
       fetchChampionships();
     }, []);
 
+    const championshipsData = Array.isArray(championships) 
+  ? championships 
+  : championships?.$values || [];
+
+
 
       
     return(
@@ -25,8 +30,8 @@ function Championships() {
             {championships.length === 0 ? (
         <p>You're not enrolled in any championships.</p>
       ) : (
-        championships.map((championship) => (
-          <CampeonatosUser key={championship.id} championship={championship} />
+        championshipsData.map((championship) => (
+          <CampeonatosUser key={championship.id}> championship={championship}</CampeonatosUser>
         )))}
         <button className="botonMas mt-3">+</button>
             </div>

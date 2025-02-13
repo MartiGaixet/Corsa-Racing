@@ -1,8 +1,17 @@
 import React from "react";
 import Form from "../components/SignUpForm"
 import Logo from "../assets/CRLogo.png"
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+
+    const navigate = useNavigate();
+
+    const goLogin = () => {
+        navigate("/");
+      }
+
+
     return (
     <div className="d-flex">
         <div className="bodyLogin">
@@ -16,6 +25,7 @@ function Signup() {
         <div className="formContainer">
         <h4 className="mt-5">Corsa Racing</h4>
         <h4 className="mt-5 text-align-left">Welcome!</h4>
+        <p className="mt-2">Already have an account? Login <span onClick={goLogin}><b>here</b></span></p>
         <div className="mt-2 d-flex justify-content-center">
         <Form></Form>
         </div>

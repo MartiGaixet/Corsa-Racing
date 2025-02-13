@@ -13,20 +13,19 @@ function SignupForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // Eliminar confirmPassword antes de enviarlo al backend
+
     const { confirmPassword, ...userData } = data;
   
     try {
       const response = await fetch("https://localhost:7033/api/UsersApi/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData), // Enviamos solo los datos necesarios
+        body: JSON.stringify(userData),
       });
   
       if (response.ok) {
-        alert("Registro exitoso");
         reset();
-        navigate("/"); // Redirige al home o login
+        navigate("/Home");
       } else {
         const errorData = await response.json();
         alert(errorData.message || "Error en el registro");
@@ -75,7 +74,7 @@ function SignupForm() {
             <option value="Andorra">Andorra</option>
             <option value="Belgium">Belgium</option>
             <option value="Spain">Spain</option>
-            {/* Agrega más países si es necesario */}
+  
           </select>
           {errors.country && <span>{errors.country.message}</span>}
         </div>

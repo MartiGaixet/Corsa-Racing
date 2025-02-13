@@ -15,22 +15,25 @@ function LoginForm() {
     try {
       const response = await fetch("https://localhost:7033/api/UsersApi/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Email: data.Email,  
+          Password: data.Password,
+        }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Credenciales incorrectas");
       }
-
+  
       const user = await response.json();
       localStorage.setItem("user", JSON.stringify(user));
-      navigate("/");
+      navigate("/Home");
     } catch (error) {
       alert(error.message);
     }
-
-    reset(); 
   };
 
   return (
@@ -41,9 +44,9 @@ function LoginForm() {
           <input
             type="email"
             className="form-control"
-            {...register("email", { required: "Este campo es obligatorio" })}
+            {...register("Email", { required: "Este campo es obligatorio" })}
           />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.Email && <span>{errors.Email.message}</span>}
         </div>
 
         <div>
@@ -51,9 +54,9 @@ function LoginForm() {
           <input
             type="password"
             className="form-control"
-            {...register("password", { required: "Este campo es obligatorio" })}
+            {...register("Password", { required: "Este campo es obligatorio" })}
           />
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.Password && <span>{errors.Password.message}</span>}
         </div>
 
         <div className="d-flex justify-content-center">

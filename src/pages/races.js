@@ -26,7 +26,7 @@ function Races() {
                 </div>
       ) : (
         races.map((race) => (
-          <RacesUser key={race.id} championship={race} />
+          <RacesUser key={race.id} race={race} />
         )))}
             </div>
         </div>

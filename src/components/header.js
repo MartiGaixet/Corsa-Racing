@@ -14,20 +14,13 @@ const Header = () => {
   }
 
   const goHome = () => {
-    navigate("/");
+    navigate("/Home");
   }
 
   const goRaces = () => {
     navigate("/carreras");
   }
 
-  const goSignup = () => {
-    navigate("/signup");
-  }
-
-  const goLogin = () => {
-    navigate("/login");
-  }
 
   return (
     <div className='container'>
@@ -39,8 +32,6 @@ const Header = () => {
       <ul class="nav nav-pills">
         <li class="nav-item nav-link" onClick={goChampionships}>Championships</li>
         <li class="nav-item nav-link" onClick={goRaces}>Races</li>
-        <li class="nav-item nav-link" onClick={goSignup}>Newspaper</li>
-        <li class="nav-item nav-link" onClick={goLogin}>About</li>
         <li class="nav-item nav-link"><img src={Casco} width="40" height="auto" alt='Casco Perfil'></img></li>
       </ul>
     </header>
