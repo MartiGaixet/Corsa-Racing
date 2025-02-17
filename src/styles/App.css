@@ -172,15 +172,27 @@ form div{
   transform: scale(1.15);
 }
 
-.dark-card{
+.card{
   width: 18rem;
   border-radius: 10px;
-  background-color: #0000;
+  border-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.card:hover{
+  transform: scale(1.15);
 }
 
 .card-body{
-  background-color: black;
-  border-radius: 10px 10px 0 0;
+  background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.9),
+      rgba(4, 2, 39, 0.9)
+    ),
+    url(../assets/fondo-tarjetas.webp);
+    background-size: cover; 
+  background-position: center;
+  border: none;
 }
 
 .card-footer{

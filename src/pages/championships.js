@@ -27,12 +27,18 @@ function Championships() {
             <h2 className="othersSubtitles">My championships</h2>
             <div class="linea-blanca"></div>
             <div className="mt-5 d-flex flex-column align-items-center">
-            {championships.length === 0 ? (
-        <p>You're not enrolled in any championships.</p>
-      ) : (
-        championshipsData.map((championship) => (
-          <CampeonatosUser key={championship.id}> championship={championship}</CampeonatosUser>
-        )))}
+            <div>
+            {championshipsData.length > 0 ? (
+      championshipsData.map((championship, index) => (
+        championship ? (
+          <CampeonatosUser key={championship.id || index} championship={championship} />
+        ) : null
+      ))
+    ) : (
+      <p>You're not enrolled in any championships.</p>
+    )}
+  </div>
+
         <button className="botonMas mt-3">+</button>
             </div>
         </div>
