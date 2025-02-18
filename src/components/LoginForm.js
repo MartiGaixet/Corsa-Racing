@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState(""); // Estado para el mensaje de error
   const {
     register,
     handleSubmit,
@@ -12,6 +13,8 @@ function LoginForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoginError(""); // Reinicia el mensaje de error antes de intentar el login
+
     try {
       const response = await fetch("https://localhost:7033/api/UsersApi/login", {
         method: "POST",
@@ -23,16 +26,16 @@ function LoginForm() {
           Password: data.Password,
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Credenciales incorrectas");
       }
-  
+
       const user = await response.json();
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userId", user.id);
       navigate("/Home");
     } catch (error) {
-      alert(error.message);
+      setLoginError(error.message); // Guarda el error en el estado
     }
   };
 
@@ -46,7 +49,7 @@ function LoginForm() {
             className="form-control"
             {...register("Email", { required: "Este campo es obligatorio" })}
           />
-          {errors.Email && <span>{errors.Email.message}</span>}
+          {errors.Email && <span className="text-danger">{errors.Email.message}</span>}
         </div>
 
         <div>
@@ -56,7 +59,8 @@ function LoginForm() {
             className="form-control"
             {...register("Password", { required: "Este campo es obligatorio" })}
           />
-          {errors.Password && <span>{errors.Password.message}</span>}
+          {errors.Password && <span className="text-danger">{errors.Password.message}</span>}
+          {loginError && <span className="text-danger">{loginError}</span>} {/* Muestra el error si existe */}
         </div>
 
         <div className="d-flex justify-content-center">
@@ -68,3 +72,4 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
