@@ -40,13 +40,13 @@ function CampeonatosUser({ championship }) {
         return <p>Loading...</p>;
     }
 
-    // Encontrar la próxima carrera
+    
     const now = new Date();
     const upcomingRaces = races.filter((race) => new Date(race.date) > now);
 
     const nextRace = upcomingRaces.sort((a, b) => new Date(a.date) - new Date(b.date))[0];
 
-    // Calcular tiempo restante y mostrar circuito y coche
+    
     let nextRaceInfo = "No upcoming races";
     if (nextRace) {
         const raceDate = new Date(nextRace.date);

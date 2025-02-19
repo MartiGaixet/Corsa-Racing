@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const [loginError, setLoginError] = useState(""); // Estado para el mensaje de error
+  const [loginError, setLoginError] = useState("");
   const {
     register,
     handleSubmit,
@@ -13,7 +13,7 @@ function LoginForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    setLoginError(""); // Reinicia el mensaje de error antes de intentar el login
+    setLoginError(""); 
 
     try {
       const response = await fetch("https://localhost:7033/api/UsersApi/login", {
@@ -35,7 +35,7 @@ function LoginForm() {
       localStorage.setItem("userId", user.id);
       navigate("/Home");
     } catch (error) {
-      setLoginError(error.message); // Guarda el error en el estado
+      setLoginError(error.message); 
     }
   };
 
@@ -60,7 +60,7 @@ function LoginForm() {
             {...register("Password", { required: "Este campo es obligatorio" })}
           />
           {errors.Password && <span className="text-danger">{errors.Password.message}</span>}
-          {loginError && <span className="text-danger">{loginError}</span>} {/* Muestra el error si existe */}
+          {loginError && <span className="text-danger">{loginError}</span>} 
         </div>
 
         <div className="d-flex justify-content-center">

@@ -70,7 +70,7 @@ function SignupForm() {
             className="form-control"
             {...register("confirmPassword", {
               required: "Este campo es obligatorio",
-              validate: (value) => value === password || "Las contraseñas no coinciden", // 👈 Validación personalizada
+              validate: (value) => value === password || "Las contraseñas no coinciden",
             })}
           />
           {errors.confirmPassword && <span className="text-danger">{errors.confirmPassword.message}</span>}

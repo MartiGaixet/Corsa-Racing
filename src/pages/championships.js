@@ -9,24 +9,24 @@ function Championships() {
   const [filteredChampionships, setFilteredChampionships] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  // Obtener el ID del usuario almacenado en localStorage
+  
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchChampionships = async () => {
       try {
-        // 1️⃣ Obtener todos los campeonatos
+        
         const response = await axios.get("https://localhost:7033/api/ChampionshipsApi");
         const allChampionships = response.data.$values || response.data || [];
 
-        // 2️⃣ Filtrar los campeonatos en los que el usuario participa
+        
         const championshipsWithParticipation = [];
 
         for (const championship of allChampionships) {
           const racesResponse = await axios.get(`https://localhost:7033/api/RacesApi/byChampionship/${championship.id}`);
           const races = racesResponse.data.$values || racesResponse.data || [];
 
-          // Verificar si alguna carrera tiene al usuario en ParticipationRace
+          
           const userInChampionship = races.some(race =>
             race.participationRace?.$values?.some(participation => participation.userId == userId)
           );
@@ -36,7 +36,7 @@ function Championships() {
           }
         }
 
-        // 3️⃣ Guardar solo los campeonatos donde participa el usuario
+        
         setFilteredChampionships(championshipsWithParticipation);
       } catch (error) {
         console.error("Error fetching championships:", error);

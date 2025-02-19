@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Pencil from "../assets/editPencil.png";
 import Casco from "../assets/cascoPerfil.png";
@@ -6,11 +7,12 @@ import Casco from "../assets/cascoPerfil.png";
 function ProfileWidget({ show, onClose }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false); 
+  const [saving, setSaving] = useState(false);
   const [editableUser, setEditableUser] = useState({ name: "", country: "" });
-  const [editingField, setEditingField] = useState(null); 
+  const [editingField, setEditingField] = useState(null);
 
   const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -60,6 +62,11 @@ function ProfileWidget({ show, onClose }) {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    navigate("/");
+  };
+
   if (!show) return null;
 
   return (
@@ -67,21 +74,20 @@ function ProfileWidget({ show, onClose }) {
       <div className="profile-content">
         <button className="close-btn" onClick={onClose}>✖</button>
         <h3 className="profile-title">My Profile</h3>
-        
+
         {loading ? (
           <p>Loading...</p>
         ) : user ? (
           <>
             <img src={Casco} width="120" height="auto" className="profile-image" alt="Profile Icon" />
 
-            {/* Nombre en negrita debajo del casco */}
             <div className="editable-name">
               {editingField === "name" ? (
-                <input 
-                  type="text" 
-                  name="name" 
-                  value={editableUser.name} 
-                  onChange={handleChange} 
+                <input
+                  type="text"
+                  name="name"
+                  value={editableUser.name}
+                  onChange={handleChange}
                   onBlur={() => setEditingField(null)}
                   autoFocus
                   className="profile-input"
@@ -91,7 +97,7 @@ function ProfileWidget({ show, onClose }) {
                   {editableUser.name}
                 </span>
               )}
-              <img src={Pencil} className="edit-icon" onClick={() => setEditingField("name")} />
+              <img src={Pencil} className="edit-icon" alt="Editar campo" onClick={() => setEditingField("name")} />
             </div>
 
             <div className="profile-info">
@@ -103,11 +109,11 @@ function ProfileWidget({ show, onClose }) {
               <label>Country</label>
               <div className="editable-field">
                 {editingField === "country" ? (
-                  <input 
-                    type="text" 
-                    name="country" 
-                    value={editableUser.country} 
-                    onChange={handleChange} 
+                  <input
+                    type="text"
+                    name="country"
+                    value={editableUser.country}
+                    onChange={handleChange}
                     onBlur={() => setEditingField(null)}
                     autoFocus
                     className="profile-input"
@@ -115,16 +121,16 @@ function ProfileWidget({ show, onClose }) {
                 ) : (
                   <span onClick={() => setEditingField("country")}>{editableUser.country}</span>
                 )}
-                <img src={Pencil} className="edit-icon" onClick={() => setEditingField("country")} />
+                <img src={Pencil} className="edit-icon" alt="Editar campo" onClick={() => setEditingField("country")} />
               </div>
             </div>
 
-            <button 
-              className="botonLogin mt-5" 
-              onClick={handleSaveChanges} 
-              disabled={saving}
-            >
+            <button className="botonLogin mt-5" onClick={handleSaveChanges} disabled={saving}>
               {saving ? "Saving..." : "Save Changes"}
+            </button>
+
+            <button className="botonLogout mt-5" onClick={handleLogout}>
+              Log Out
             </button>
           </>
         ) : (
@@ -136,3 +142,4 @@ function ProfileWidget({ show, onClose }) {
 }
 
 export default ProfileWidget;
+

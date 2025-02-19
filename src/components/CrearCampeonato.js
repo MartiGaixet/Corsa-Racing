@@ -8,15 +8,15 @@ function CrearCampeonato({ show, handleClose }) {
   const [usuarios, setUsuarios] = useState([""]);
   const [loading, setLoading] = useState(false);
 
-  // Agregar y eliminar carreras
+  
   const handleAddCarrera = () => setCarreras([...carreras, { circuito: "", coche: "", fecha: "" }]);
   const handleRemoveCarrera = () => setCarreras(carreras.slice(0, -1));
 
-  // Agregar y eliminar usuarios
+  
   const handleAddUsuario = () => setUsuarios([...usuarios, ""]);
   const handleRemoveUsuario = () => setUsuarios(usuarios.slice(0, -1));
 
-  // Manejar cambios en inputs
+  
   const handleCarreraChange = (index, field, value) => {
     const nuevasCarreras = [...carreras];
     nuevasCarreras[index][field] = value;
@@ -48,14 +48,14 @@ function CrearCampeonato({ show, handleClose }) {
 
     setLoading(true);
     try {
-      // 1️⃣ Crear el campeonato
+      
       const campeonatoResponse = await axios.post("https://localhost:7033/api/ChampionshipsApi", {
         nombre: nombreCampeonato
       });
 
       const championshipId = campeonatoResponse.data.id;
 
-      // 2️⃣ Crear las carreras con championshipId
+      
       for (const carrera of carreras) {
         const carreraResponse = await axios.post("https://localhost:7033/api/RacesApi", {
           circuit: carrera.circuito,
@@ -66,7 +66,7 @@ function CrearCampeonato({ show, handleClose }) {
 
         const raceId = carreraResponse.data.id;
 
-        // 3️⃣ Agregar usuarios a la carrera en ParticipationRaces
+        
         for (const email of usuarios) {
           const userResponse = await axios.get(`https://localhost:7033/api/UsersApi/byEmail/${email}`);
           const userId = userResponse.data.id;
@@ -95,7 +95,7 @@ function CrearCampeonato({ show, handleClose }) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          {/* Nombre del Campeonato */}
+         
           <Form.Group className="mb-3">
             <Form.Label>Nombre del Campeonato</Form.Label>
             <Form.Control
@@ -106,7 +106,7 @@ function CrearCampeonato({ show, handleClose }) {
             />
           </Form.Group>
 
-          {/* Sección de Carreras */}
+          
           <h5>Carreras</h5>
           {carreras.map((carrera, index) => (
             <div key={index} className="mb-3">
@@ -137,7 +137,7 @@ function CrearCampeonato({ show, handleClose }) {
             <Button variant="secondary" onClick={handleAddCarrera}>+ Añadir Carrera</Button>
           </div>
 
-          {/* Sección de Usuarios */}
+          
           <h5 className="mt-3">Usuarios</h5>
           {usuarios.map((usuario, index) => (
             <Form.Control

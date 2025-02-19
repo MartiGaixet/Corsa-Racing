@@ -12,8 +12,19 @@ function Races() {
                 const response = await axios.get("https://localhost:7033/api/RacesApi");
                 console.log("Datos recibidos:", response.data);
 
-                // Acceder a $values si existe, sino dejar un array vacío
-                setRaces(Array.isArray(response.data.$values) ? response.data.$values : []);
+                const allRaces = Array.isArray(response.data.$values) ? response.data.$values : [];
+
+                
+                const now = new Date();
+                const adjustedNow = new Date(now.getTime() - 30 * 60000);
+
+                
+                const upcomingRaces = allRaces.filter((race) => {
+                    const raceDate = new Date(race.date); 
+                    return raceDate > adjustedNow;
+                });
+
+                setRaces(upcomingRaces);
             } catch (error) {
                 console.error("Error fetching races:", error);
                 setRaces([]);

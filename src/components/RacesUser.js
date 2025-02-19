@@ -2,11 +2,11 @@ import React from "react";
 import Casco from "../assets/helmet.png";
 
 function RacesUser({ race }) {
-    // Obtener la fecha actual y la fecha de la carrera
+    
     const now = new Date();
     const raceDate = new Date(race.date);
 
-    // Calcular tiempo restante
+    
     let timeRemaining = "Race finished";
     if (raceDate > now) {
         const diffMs = raceDate - now;
@@ -15,7 +15,7 @@ function RacesUser({ race }) {
         timeRemaining = `${days}d ${hours}h`;
     }
 
-    // Acceder correctamente a participationRace.$values
+    
     const driversCount = race.participationRace?.$values ? race.participationRace.$values.length : 0;
 
     return (
