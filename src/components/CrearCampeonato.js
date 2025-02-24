@@ -8,15 +8,12 @@ function CrearCampeonato({ show, handleClose }) {
   const [usuarios, setUsuarios] = useState([""]);
   const [loading, setLoading] = useState(false);
 
-  
   const handleAddCarrera = () => setCarreras([...carreras, { circuito: "", coche: "", fecha: "" }]);
   const handleRemoveCarrera = () => setCarreras(carreras.slice(0, -1));
-
   
   const handleAddUsuario = () => setUsuarios([...usuarios, ""]);
   const handleRemoveUsuario = () => setUsuarios(usuarios.slice(0, -1));
 
-  
   const handleCarreraChange = (index, field, value) => {
     const nuevasCarreras = [...carreras];
     nuevasCarreras[index][field] = value;
@@ -29,64 +26,73 @@ function CrearCampeonato({ show, handleClose }) {
     setUsuarios(nuevosUsuarios);
   };
 
-  // Enviar datos a la API
   const handleSubmit = async () => {
     if (!nombreCampeonato.trim()) {
       alert("El nombre del campeonato no puede estar vacío.");
       return;
     }
-
     if (carreras.some(c => !c.circuito.trim() || !c.coche.trim() || !c.fecha.trim())) {
       alert("Todas las carreras deben estar completas.");
       return;
     }
-
     if (usuarios.some(u => !u.trim())) {
       alert("Todos los usuarios deben tener un email válido.");
       return;
     }
-
+  
     setLoading(true);
     try {
-      
+      // Crear el campeonato
       const campeonatoResponse = await axios.post("https://localhost:7033/api/ChampionshipsApi", {
-        nombre: nombreCampeonato
+        name: nombreCampeonato,
+        description: "Campeonato generado desde React"
       });
-
+  
       const championshipId = campeonatoResponse.data.id;
-
-      
+  
+      // Crear cada carrera
       for (const carrera of carreras) {
         const carreraResponse = await axios.post("https://localhost:7033/api/RacesApi", {
           circuit: carrera.circuito,
           car: carrera.coche,
           date: carrera.fecha,
-          championshipId
+          championshipId: championshipId
         });
-
-        const raceId = carreraResponse.data.id;
-
-        
+  
+        const race = carreraResponse.data;
+  
+        // Obtener IDs de los usuarios a partir de los correos electrónicos
         for (const email of usuarios) {
-          const userResponse = await axios.get(`https://localhost:7033/api/UsersApi/byEmail/${email}`);
-          const userId = userResponse.data.id;
-
-          await axios.post("https://localhost:7033/api/ParticipationRacesApi", {
-            userId,
-            raceId
-          });
+          try {
+            const userResponse = await axios.get(`https://localhost:7033/api/UsersApi/byEmail/${email}`);
+            if (!userResponse.data || !userResponse.data.id) {
+              alert(`No se encontró usuario con email: ${email}`);
+              continue;
+            }
+            const driver = userResponse.data;
+  
+            await axios.post("https://localhost:7033/api/ParticipationRacesApi", {
+              userId: driver.id,  
+              raceId: race.id
+            });
+            
+  
+          } catch (error) {
+            console.error("Error al asignar usuario a la carrera:", error);
+          }
         }
       }
-
-      alert("¡Campeonato creado con éxito!");
+  
+      alert("¡Campeonato y usuarios asignados con éxito!");
       handleClose();
     } catch (error) {
-      console.error("Error al crear el campeonato:", error);
-      alert("Hubo un error al procesar la solicitud.");
+      console.error("Error al crear el campeonato:", error.response ? error.response.data : error.message);
+      alert(`Error en la API: ${JSON.stringify(error.response?.data)}`);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <Modal show={show} onHide={handleClose} centered>
@@ -95,7 +101,6 @@ function CrearCampeonato({ show, handleClose }) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-         
           <Form.Group className="mb-3">
             <Form.Label>Nombre del Campeonato</Form.Label>
             <Form.Control
@@ -105,7 +110,6 @@ function CrearCampeonato({ show, handleClose }) {
               placeholder="Ejemplo: Campeonato 2025"
             />
           </Form.Group>
-
           
           <h5>Carreras</h5>
           {carreras.map((carrera, index) => (
@@ -136,7 +140,6 @@ function CrearCampeonato({ show, handleClose }) {
             <Button variant="danger" onClick={handleRemoveCarrera} disabled={carreras.length <= 1}>- Eliminar Carrera</Button>
             <Button variant="secondary" onClick={handleAddCarrera}>+ Añadir Carrera</Button>
           </div>
-
           
           <h5 className="mt-3">Usuarios</h5>
           {usuarios.map((usuario, index) => (

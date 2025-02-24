@@ -25,7 +25,7 @@ function SignupForm() {
 
       if (response.ok) {
         reset();
-        navigate("/Home");
+        navigate("/");
       } else {
         const errorData = await response.json();
         alert(errorData.message || "Error en el registro");
@@ -83,6 +83,9 @@ function SignupForm() {
             <option value="Andorra">Andorra</option>
             <option value="Belgium">Belgium</option>
             <option value="Spain">Spain</option>
+            <option value="England">England</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Germany">Germany</option>
           </select>
           {errors.country && <span className="text-danger">{errors.country.message}</span>}
         </div>

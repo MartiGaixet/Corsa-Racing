@@ -62,18 +62,19 @@ function CampeonatosUser({ championship }) {
         <div>
             <div className="d-flex justify-content-between campeonatoPreview">
                 <div>
-                    <h6>{championship.name}</h6>
+                    <h3>{championship.name}</h3>
                     <p>Next race: {nextRaceInfo}</p>
                 </div>
-                <div className="d-flex mt-4 me-3 gap-2">
+                <div className="d-flex align-items-center justify-content-center gap-2">
                     <img src={Casco} alt="Casco icono" width="20" height="20" />
-                    <h6>
-                        {races.reduce(
-                            (total, race) =>
-                                total + (race.participationRace?.$values ? race.participationRace.$values.length : 0),
-                            0
-                        )}
-                    </h6>
+                    <h5 className="d-flex align-items-center mb-0 me-4">
+                    {races.reduce(
+                    (total, race) =>
+                        total + (race.participationRace?.$values ? races.length : 0),
+                    0
+                )}
+
+                    </h5>
                 </div>
             </div>
         </div>
