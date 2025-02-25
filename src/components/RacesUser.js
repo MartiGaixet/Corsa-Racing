@@ -42,9 +42,7 @@ function RacesUser({ race }) {
         <div>
             <div className="card text-white dark-card mb-4">
                 <div className="card-body">
-                    {/* Muestra el nombre del campeonato obtenido por API */}
                     <h5 className="card-title text-center">{championshipName}</h5>
-                    {/* Muestra {race.circuit} - {race.car} */}
                     <p className="card-text text-center">{`${race.circuit} - ${race.car}`}</p>
                 </div>
                 <div className="card-footer d-flex justify-content-between align-items-center">

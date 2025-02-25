@@ -5,41 +5,43 @@ import CampeonatosUser from "../components/CampeonatosUser";
 import CrearCampeonato from "../components/CrearCampeonato";
 
 function Championships() {
-  const [championships, setChampionships] = useState([]);
   const [filteredChampionships, setFilteredChampionships] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
-  
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchChampionships = async () => {
       try {
-        
-        const response = await axios.get("https://localhost:7033/api/ChampionshipsApi");
-        const allChampionships = response.data.$values || response.data || [];
+        console.log("Fetching championships...");
 
-        
-        const championshipsWithParticipation = [];
+        const { data: championshipsData } = await axios.get("https://localhost:7033/api/ChampionshipsApi");
+        const allChampionships = championshipsData?.$values || championshipsData || [];
+        console.log("All Championships:", allChampionships);
+
+        const championshipsWithParticipation = new Set();
 
         for (const championship of allChampionships) {
-          const racesResponse = await axios.get(`https://localhost:7033/api/RacesApi/byChampionship/${championship.id}`);
-          const races = racesResponse.data.$values || racesResponse.data || [];
+          try {
+            const { data: racesData } = await axios.get(`https://localhost:7033/api/RacesApi/byChampionship/${championship.id}`);
+            const races = racesData?.$values || racesData || [];
+            console.log(`Races for Championship ${championship.id}:`, races);
 
-          
-          const userInChampionship = races.some(race =>
-            race.participationRace?.$values?.some(participation => participation.userId == userId)
-          );
+            const userInChampionship = races.some(race =>
+              race.participationRace?.$values?.some(participation => participation.userId == userId)
+            );
 
-          if (userInChampionship) {
-            championshipsWithParticipation.push(championship);
+            if (userInChampionship) {
+              championshipsWithParticipation.add(championship);
+            }
+          } catch (error) {
+            console.error(`Error fetching races for championship ${championship.id}:`, error);
           }
         }
 
-        
-        setFilteredChampionships(championshipsWithParticipation);
+        setFilteredChampionships([...championshipsWithParticipation]);
+        console.log("Filtered Championships:", [...championshipsWithParticipation]);
       } catch (error) {
-        console.error("Error fetching championships:", error);
+        console.error("Error fetching championships:", error.response?.data || error.message);
       }
     };
 
@@ -58,7 +60,9 @@ function Championships() {
           {filteredChampionships.length > 0 ? (
             filteredChampionships.map((championship, index) => (
               championship ? (
+                <div className="mb-4">
                 <CampeonatosUser key={championship.id || index} championship={championship} />
+                </div>
               ) : null
             ))
           ) : (
@@ -66,8 +70,7 @@ function Championships() {
           )}
         </div>
 
-        <button className="botonMas mt-3" onClick={() => setShowModal(true)}>+</button>
-
+        <button className="botonMas mt-3 mb-3" onClick={() => setShowModal(true)}>+</button>
         <CrearCampeonato show={showModal} handleClose={() => setShowModal(false)} />
       </div>
     </div>
@@ -75,3 +78,4 @@ function Championships() {
 }
 
 export default Championships;
+

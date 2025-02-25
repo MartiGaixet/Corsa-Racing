@@ -53,7 +53,6 @@ function ProfileWidget({ show, onClose }) {
       });
       setUser((prev) => ({ ...prev, ...editableUser }));
       setEditingField(null);
-      alert("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile.");
@@ -109,15 +108,22 @@ function ProfileWidget({ show, onClose }) {
               <label>Country</label>
               <div className="editable-field">
                 {editingField === "country" ? (
-                  <input
-                    type="text"
+                  <select
                     name="country"
                     value={editableUser.country}
                     onChange={handleChange}
                     onBlur={() => setEditingField(null)}
                     autoFocus
                     className="profile-input"
-                  />
+                  >
+                    <option value="">Select...</option>
+                    <option value="Andorra">Andorra</option>
+                    <option value="Belgium">Belgium</option>
+                    <option value="Spain">Spain</option>
+                    <option value="England">England</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Germany">Germany</option>
+                  </select>
                 ) : (
                   <span onClick={() => setEditingField("country")}>{editableUser.country}</span>
                 )}
@@ -142,4 +148,3 @@ function ProfileWidget({ show, onClose }) {
 }
 
 export default ProfileWidget;
-

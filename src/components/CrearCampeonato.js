@@ -61,7 +61,6 @@ function CrearCampeonato({ show, handleClose }) {
   
         const race = carreraResponse.data;
   
-        // Obtener IDs de los usuarios a partir de los correos electrónicos
         for (const email of usuarios) {
           try {
             const userResponse = await axios.get(`https://localhost:7033/api/UsersApi/byEmail/${email}`);
@@ -82,8 +81,7 @@ function CrearCampeonato({ show, handleClose }) {
           }
         }
       }
-  
-      alert("¡Campeonato y usuarios asignados con éxito!");
+
       handleClose();
     } catch (error) {
       console.error("Error al crear el campeonato:", error.response ? error.response.data : error.message);
